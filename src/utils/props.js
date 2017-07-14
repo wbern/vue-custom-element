@@ -28,21 +28,33 @@ export function convertAttributeValue(value) {
  */
 export function getProps(componentDefinition = {}) {
   const props = {
+    set: new Set(),
     camelCase: [],
     hyphenate: []
   };
 
-  if (componentDefinition.props && componentDefinition.props.length) {
-    componentDefinition.props.forEach((prop) => {
-      props.camelCase.push(camelize(prop));
+  if (componentDefinition.mixins) {
+    componentDefinition.mixins.forEach((mixin) => {
+      if (!mixin.props) return;
+      (Array.isArray(mixin.props) ? mixin.props : Object.keys(mixin.props)).forEach((propName) => {
+        props.set.add(propName);
+      });
     });
-  } else if (componentDefinition.props && typeof componentDefinition.props === 'object') {
-    for (const prop in componentDefinition.props) { // eslint-disable-line no-restricted-syntax, guard-for-in
-      props.camelCase.push(camelize(prop));
-    }
   }
-
-  props.camelCase.forEach((prop) => {
+  if (componentDefinition.extends && componentDefinition.extends.props) {
+    const { props: parentProps } = componentDefinition.extends;
+    (Array.isArray(parentProps) ? parentProps : Object.keys(parentProps)).forEach((propName) => {
+      props.set.add(propName);
+    });
+  }
+  if (componentDefinition.props) {
+    const compProps = componentDefinition.props;
+    (Array.isArray(compProps) ? compProps : Object.keys(compProps)).forEach((prop) => {
+      props.set.add(prop);
+    });
+  }
+  Array.from(props.set).forEach((prop) => {
+    props.camelCase.push(camelize(prop));
     props.hyphenate.push(hyphenate(prop));
   });
 

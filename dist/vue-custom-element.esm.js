@@ -168,21 +168,34 @@ function getProps() {
   var componentDefinition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   var props = {
+    set: new Set(),
     camelCase: [],
     hyphenate: []
   };
 
-  if (componentDefinition.props && componentDefinition.props.length) {
-    componentDefinition.props.forEach(function (prop) {
-      props.camelCase.push(camelize(prop));
+  if (componentDefinition.mixins) {
+    componentDefinition.mixins.forEach(function (mixin) {
+      if (!mixin.props) return;
+      (Array.isArray(mixin.props) ? mixin.props : Object.keys(mixin.props)).forEach(function (propName) {
+        props.set.add(propName);
+      });
     });
-  } else if (componentDefinition.props && _typeof(componentDefinition.props) === 'object') {
-    for (var prop in componentDefinition.props) {
-      props.camelCase.push(camelize(prop));
-    }
   }
+  if (componentDefinition.extends && componentDefinition.extends.props) {
+    var parentProps = componentDefinition.extends.props;
 
-  props.camelCase.forEach(function (prop) {
+    (Array.isArray(parentProps) ? parentProps : Object.keys(parentProps)).forEach(function (propName) {
+      props.set.add(propName);
+    });
+  }
+  if (componentDefinition.props) {
+    var compProps = componentDefinition.props;
+    (Array.isArray(compProps) ? compProps : Object.keys(compProps)).forEach(function (prop) {
+      props.set.add(prop);
+    });
+  }
+  Array.from(props.set).forEach(function (prop) {
+    props.camelCase.push(camelize(prop));
     props.hyphenate.push(hyphenate(prop));
   });
 
