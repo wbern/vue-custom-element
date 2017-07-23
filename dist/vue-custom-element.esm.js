@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.2.2
+  * vue-custom-element v1.3.0
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -164,6 +164,20 @@ function convertAttributeValue(value) {
   return propsValue;
 }
 
+function extractProps(collection, props) {
+  if (collection && collection.length) {
+    collection.forEach(function (prop) {
+      var camelCaseProp = camelize(prop);
+      props.camelCase.indexOf(camelCaseProp) === -1 && props.camelCase.push(camelCaseProp);
+    });
+  } else if (collection && (typeof collection === 'undefined' ? 'undefined' : _typeof(collection)) === 'object') {
+    for (var prop in collection) {
+      var camelCaseProp = camelize(prop);
+      props.camelCase.indexOf(camelCaseProp) === -1 && props.camelCase.push(camelCaseProp);
+    }
+  }
+}
+
 function getProps() {
   var componentDefinition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -172,15 +186,20 @@ function getProps() {
     hyphenate: []
   };
 
-  if (componentDefinition.props && componentDefinition.props.length) {
-    componentDefinition.props.forEach(function (prop) {
-      props.camelCase.push(camelize(prop));
+  if (componentDefinition.mixins) {
+    componentDefinition.mixins.forEach(function (mixin) {
+      extractProps(mixin.props, props);
     });
-  } else if (componentDefinition.props && _typeof(componentDefinition.props) === 'object') {
-    for (var prop in componentDefinition.props) {
-      props.camelCase.push(camelize(prop));
-    }
   }
+
+  if (componentDefinition.extends && componentDefinition.extends.props) {
+    var parentProps = componentDefinition.extends.props;
+
+
+    extractProps(parentProps, props);
+  }
+
+  extractProps(componentDefinition.props, props);
 
   props.camelCase.forEach(function (prop) {
     props.hyphenate.push(hyphenate(prop));
@@ -302,7 +321,7 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
       }
 
       customEmit.apply(undefined, [element].concat(args));
-      (_proto__$$emit = this.__proto__.$emit).call.apply(_proto__$$emit, [this].concat(args));
+      this.__proto__ && (_proto__$$emit = this.__proto__.$emit).call.apply(_proto__$$emit, [this].concat(args));
     };
 
     var rootElement = void 0;
