@@ -21,6 +21,20 @@ export function convertAttributeValue(value) {
   return propsValue;
 }
 
+function extractProps(collection, props) {
+  if (collection && collection.length) {
+    collection.forEach((prop) => {
+      const camelCaseProp = camelize(prop);
+      props.camelCase.indexOf(camelCaseProp) === -1 && props.camelCase.push(camelCaseProp);
+    });
+  } else if (collection && typeof collection === 'object') {
+    for (const prop in collection) { // eslint-disable-line no-restricted-syntax, guard-for-in
+      const camelCaseProp = camelize(prop);
+      props.camelCase.indexOf(camelCaseProp) === -1 && props.camelCase.push(camelCaseProp);
+    }
+  }
+}
+
 /**
  * Extract props from component definition, no matter if it's array or object
  * @param componentDefinition
@@ -32,15 +46,20 @@ export function getProps(componentDefinition = {}) {
     hyphenate: []
   };
 
-  if (componentDefinition.props && componentDefinition.props.length) {
-    componentDefinition.props.forEach((prop) => {
-      props.camelCase.push(camelize(prop));
+
+  if (componentDefinition.mixins) {
+    componentDefinition.mixins.forEach((mixin) => {
+      extractProps(mixin.props, props);
     });
-  } else if (componentDefinition.props && typeof componentDefinition.props === 'object') {
-    for (const prop in componentDefinition.props) { // eslint-disable-line no-restricted-syntax, guard-for-in
-      props.camelCase.push(camelize(prop));
-    }
   }
+
+  if (componentDefinition.extends && componentDefinition.extends.props) {
+    const { props: parentProps } = componentDefinition.extends;
+
+    extractProps(parentProps, props);
+  }
+
+  extractProps(componentDefinition.props, props);
 
   props.camelCase.forEach((prop) => {
     props.hyphenate.push(hyphenate(prop));
