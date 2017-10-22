@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.3.0
+  * vue-custom-element v1.4.0
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -15,7 +15,7 @@ function setPrototypeOf(obj, proto) {
   return obj;
 }
 
-var index = setPrototypeOf.bind(Object);
+var setPrototypeOf_1 = setPrototypeOf.bind(Object);
 
 function isES2015() {
   if (typeof Symbol === 'undefined' || typeof Reflect === 'undefined') return false;
@@ -230,10 +230,13 @@ function getPropsData(element, componentDefinition, props) {
   var propsData = componentDefinition.propsData || {};
 
   props.hyphenate.forEach(function (name, index) {
-    var value = element.attributes[name] && element.attributes[name].nodeValue;
+    var elementAttribute = element.attributes[name];
+    var propCamelCase = props.camelCase[index];
 
-    if (value !== undefined && value !== '') {
-      propsData[props.camelCase[index]] = convertAttributeValue(value);
+    if ((typeof elementAttribute === 'undefined' ? 'undefined' : _typeof(elementAttribute)) === 'object' && !(elementAttribute instanceof Attr)) {
+      propsData[propCamelCase] = elementAttribute;
+    } else if (elementAttribute instanceof Attr && elementAttribute.value) {
+      propsData[propCamelCase] = convertAttributeValue(elementAttribute.value);
     }
   });
 
@@ -312,16 +315,17 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
     if (ComponentDefinition._Ctor) {
       ctorOptions = ComponentDefinition._Ctor[0].options;
     }
-    ComponentDefinition.methods = ctorOptions.methods = ComponentDefinition.methods || {};
-    ComponentDefinition.methods.$emit = ctorOptions.methods.$emit = function emit() {
-      var _proto__$$emit;
+    ComponentDefinition.beforeCreate = ctorOptions.beforeCreate = function beforeCreate() {
+      this.$emit = function emit() {
+        var _proto__$$emit;
 
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
 
-      customEmit.apply(undefined, [element].concat(args));
-      this.__proto__ && (_proto__$$emit = this.__proto__.$emit).call.apply(_proto__$$emit, [this].concat(args));
+        customEmit.apply(undefined, [element].concat(args));
+        this.__proto__ && (_proto__$$emit = this.__proto__.$emit).call.apply(_proto__$$emit, [this].concat(args));
+      };
     };
 
     var rootElement = void 0;
