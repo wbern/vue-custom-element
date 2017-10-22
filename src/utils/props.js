@@ -109,10 +109,7 @@ export function getPropsData(element, componentDefinition, props) {
 
     if (typeof elementAttribute === 'object' && !(elementAttribute instanceof Attr)) {
       propsData[propCamelCase] = elementAttribute;
-      return;
-    }
-
-    if (elementAttribute instanceof Attr && elementAttribute.value) {
+    } else if (elementAttribute instanceof Attr && elementAttribute.value) {
       propsData[propCamelCase] = convertAttributeValue(elementAttribute.value);
     }
   });
