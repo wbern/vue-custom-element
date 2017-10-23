@@ -17,19 +17,25 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     const propsData = getPropsData(element, ComponentDefinition, props);
     const vueVersion = (Vue.version && parseInt(Vue.version.split('.')[0], 10)) || 0;
 
-    // element.addEventListener('change-event', (event) => { console.info('[Custom Event]', event.detail); }); // eslint-disable-line
-
     // Auto event handling based on $emit
-    let ctorOptions = {}; // adjust vue-loader cache object if necessary - https://github.com/vuejs/vue-loader/issues/83
-    if (ComponentDefinition._Ctor) { // eslint-disable-line no-underscore-dangle
-      ctorOptions = ComponentDefinition._Ctor[0].options;  // eslint-disable-line no-underscore-dangle
-    }
-    ComponentDefinition.beforeCreate = ctorOptions.beforeCreate = function beforeCreate() { // eslint-disable-line no-multi-assign
-      this.$emit = function emit(...args) { // eslint-disable-line no-multi-assign
+    function beforeCreate() { // eslint-disable-line no-inner-declarations
+      this.$emit = function emit(...args) {
         customEmit(element, ...args);
         this.__proto__ && this.__proto__.$emit.call(this, ...args); // eslint-disable-line no-proto
       };
-    };
+    }
+
+    if (ComponentDefinition._compiled) { // eslint-disable-line no-underscore-dangle
+      let ctorOptions = {}; // adjust vue-loader cache object if necessary - https://github.com/vuejs/vue-loader/issues/83
+      if (ComponentDefinition._Ctor) { // eslint-disable-line no-underscore-dangle
+        ctorOptions = ComponentDefinition._Ctor[0].options;  // eslint-disable-line no-underscore-dangle
+      }
+      ComponentDefinition.beforeCreate = ComponentDefinition.beforeCreate || [];
+      ComponentDefinition.beforeCreate.push(beforeCreate);
+      ctorOptions.beforeCreate = ComponentDefinition.beforeCreate;
+    } else {
+      ComponentDefinition.beforeCreate = beforeCreate;
+    }
 
     let rootElement;
 
