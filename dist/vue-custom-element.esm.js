@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.4.0
+  * vue-custom-element v1.4.1
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -307,15 +307,7 @@ function customEmit(element, eventName) {
 
 function createVueInstance(element, Vue, componentDefinition, props, options) {
   if (!element.__vue_custom_element__) {
-    var ComponentDefinition = Vue.util.extend({}, componentDefinition);
-    var propsData = getPropsData(element, ComponentDefinition, props);
-    var vueVersion = Vue.version && parseInt(Vue.version.split('.')[0], 10) || 0;
-
-    var ctorOptions = {};
-    if (ComponentDefinition._Ctor) {
-      ctorOptions = ComponentDefinition._Ctor[0].options;
-    }
-    ComponentDefinition.beforeCreate = ctorOptions.beforeCreate = function beforeCreate() {
+    var beforeCreate = function beforeCreate() {
       this.$emit = function emit() {
         var _proto__$$emit;
 
@@ -327,6 +319,22 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
         this.__proto__ && (_proto__$$emit = this.__proto__.$emit).call.apply(_proto__$$emit, [this].concat(args));
       };
     };
+
+    var ComponentDefinition = Vue.util.extend({}, componentDefinition);
+    var propsData = getPropsData(element, ComponentDefinition, props);
+    var vueVersion = Vue.version && parseInt(Vue.version.split('.')[0], 10) || 0;
+
+    if (ComponentDefinition._compiled) {
+      var ctorOptions = {};
+      if (ComponentDefinition._Ctor) {
+        ctorOptions = ComponentDefinition._Ctor[0].options;
+      }
+      ComponentDefinition.beforeCreate = ComponentDefinition.beforeCreate || [];
+      ComponentDefinition.beforeCreate.push(beforeCreate);
+      ctorOptions.beforeCreate = ComponentDefinition.beforeCreate;
+    } else {
+      ComponentDefinition.beforeCreate = beforeCreate;
+    }
 
     var rootElement = void 0;
 
