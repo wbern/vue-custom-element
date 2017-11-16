@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.4.1
+  * vue-custom-element v1.4.2
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -269,7 +269,7 @@ function getSlots() {
       if (child.nodeValue.trim()) {
         slots.push(createElement('span', child.nodeValue));
       }
-    } else {
+    } else if (child.nodeName !== '#comment') {
       var attributes = getAttributes(child);
       var elementOptions = {
         attrs: attributes,
