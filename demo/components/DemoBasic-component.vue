@@ -37,7 +37,9 @@
       'prop1',
       'prop2',
       'prop3',
-      'longPropName'
+      'longPropName',
+      'objectProp',
+      'arrayProp'
     ],
     data() {
       return {
@@ -62,6 +64,14 @@
           prop: 'long-prop-name',
           value: JSON.stringify(this.longPropName),
           type: typeof this.longPropName
+        }, {
+          prop: 'objectProp',
+          value: this.objectProp,
+          type: typeof this.objectProp
+        }, {
+          prop: 'arrayProp',
+          value: this.arrayProp,
+          type: typeof this.arrayProp
         }];
       }
     },

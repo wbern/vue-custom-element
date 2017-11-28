@@ -32,22 +32,60 @@
       </div>
     </div>
 
+    <div class="el-form-item">
+      <label class="el-form-item__label">object-prop</label>
+      <div class="el-form-item__content">{{objectProp}}</div>
+      <a class="button white" @click="addProperty(objectProp)">Add Property</a>
+    </div>
+
+    <div class="el-form-item">
+      <label class="el-form-item__label">array-prop</label>
+      <div class="el-form-item__content">{{arrayProp}}</div>
+      <a class="button white" @click="addElement(arrayProp)">Add Element</a>
+    </div>
+
     <br />
 
-    <demo-basic :prop1="prop1" :prop2="prop2" :prop3="prop3 || 'false'" :long-prop-name="longPropName"></demo-basic>
+    <demo-basic :prop1="prop1" :prop2="prop2" :prop3="prop3 || 'false'" :long-prop-name="longPropName" :object-prop.prop="objectProp" :array-prop.prop="arrayProp"></demo-basic>
   </div>
 </template>
 
 <script>
+  import Vue from 'vue';
+
   export default {
     data() {
       return {
         prop1: 1,
         prop2: 'example text',
         prop3: true,
-        longPropName: 'long name'
+        longPropName: 'long name',
+        objectProp: { foo: 'bar' },
+        arrayProp: [1, 2, 3]
       };
+    },
+    methods: {
+      addProperty(object) {
+        const keys = Object.keys(object);
+        Vue.set(object, `property_${keys.length}`, keys.length);
+      },
+      addElement(array) {
+        array.push(array.length + 1);
+      }
     }
   };
 </script>
+
+<style>
+a.button.white {
+  width: 140px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 0.8em;
+  padding: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+</style>
+
 
