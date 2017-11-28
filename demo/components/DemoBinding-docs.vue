@@ -48,12 +48,15 @@
     :prop1="prop1"
     :prop2="prop2"
     :prop3="prop3"
-    :long-prop-name="longPropName">
+    :long-prop-name="longPropName"
+    :object-prop.prop="objectProp"
+    :array-prop.prop="arrayProp">
   </demo-basic>`
         ),
         plainJavaScript: (
 `document.getElementsByTagName('demo-basic')[0].prop1 = 123
 document.getElementsByTagName('demo-basic')[0].prop2 = 'Text from JavaScript'
+document.getElementsByTagName('demo-basic')[0].objectProp = {foo: 'baz'}
 `
         )
       };

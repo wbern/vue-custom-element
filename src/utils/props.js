@@ -104,13 +104,13 @@ export function getPropsData(element, componentDefinition, props) {
   const propsData = componentDefinition.propsData || {};
 
   props.hyphenate.forEach((name, index) => {
-    const elementAttribute = element.attributes[name];
     const propCamelCase = props.camelCase[index];
+    const propValue = element.attributes[name] || element[propCamelCase];
 
-    if (typeof elementAttribute === 'object' && !(elementAttribute instanceof Attr)) {
-      propsData[propCamelCase] = elementAttribute;
-    } else if (elementAttribute instanceof Attr && elementAttribute.value) {
-      propsData[propCamelCase] = convertAttributeValue(elementAttribute.value);
+    if (typeof propValue === 'object' && !(propValue instanceof Attr)) {
+      propsData[propCamelCase] = propValue;
+    } else if (propValue instanceof Attr && propValue.value) {
+      propsData[propCamelCase] = convertAttributeValue(propValue.value);
     }
   });
 
