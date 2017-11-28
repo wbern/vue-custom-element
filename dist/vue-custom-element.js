@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.4.2
+  * vue-custom-element v1.4.3
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -236,13 +236,13 @@ function getPropsData(element, componentDefinition, props) {
   var propsData = componentDefinition.propsData || {};
 
   props.hyphenate.forEach(function (name, index) {
-    var elementAttribute = element.attributes[name];
     var propCamelCase = props.camelCase[index];
+    var propValue = element.attributes[name] || element[propCamelCase];
 
-    if ((typeof elementAttribute === 'undefined' ? 'undefined' : _typeof(elementAttribute)) === 'object' && !(elementAttribute instanceof Attr)) {
-      propsData[propCamelCase] = elementAttribute;
-    } else if (elementAttribute instanceof Attr && elementAttribute.value) {
-      propsData[propCamelCase] = convertAttributeValue(elementAttribute.value);
+    if ((typeof propValue === 'undefined' ? 'undefined' : _typeof(propValue)) === 'object' && !(propValue instanceof Attr)) {
+      propsData[propCamelCase] = propValue;
+    } else if (propValue instanceof Attr && propValue.value) {
+      propsData[propCamelCase] = convertAttributeValue(propValue.value);
     }
   });
 

@@ -1005,6 +1005,16 @@ body {
   background-size: contain;
 }
 
+a.button.white {
+  width: 140px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 0.8em;
+  padding: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+
 .demo-events-docs {
   text-align: center;
 }
@@ -1031,4 +1041,4 @@ demo-lazy-loading > .loading {
 }
 
 
-/*# sourceMappingURL=demo.f992ef647debdcbcb5bb91d9e277c774.css.map*/
+/*# sourceMappingURL=demo.89bdcf09ca87a43d6f3df167583c3c80.css.map*/
