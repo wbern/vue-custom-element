@@ -48,7 +48,7 @@
     },
     computed: {
       tableData() {
-        return [{
+        const data = [{
           prop: 'prop1',
           value: JSON.stringify(this.prop1),
           type: typeof this.prop1
@@ -64,15 +64,21 @@
           prop: 'long-prop-name',
           value: JSON.stringify(this.longPropName),
           type: typeof this.longPropName
-        }, {
+        }];
+
+        this.objectProp && data.push({
           prop: 'objectProp',
           value: this.objectProp,
           type: typeof this.objectProp
-        }, {
+        });
+
+        this.arrayProp && data.push({
           prop: 'arrayProp',
           value: this.arrayProp,
           type: typeof this.arrayProp
-        }];
+        });
+
+        return data;
       }
     },
     created() {

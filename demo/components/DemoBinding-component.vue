@@ -34,14 +34,18 @@
 
     <div class="el-form-item">
       <label class="el-form-item__label">object-prop</label>
-      <div class="el-form-item__content">{{objectProp}}</div>
-      <a class="button white" @click="addProperty(objectProp)">Add Property</a>
+      <div class="el-form-item__content">
+        {{objectProp}}
+        <el-button type="primary" @click="addObjectProperty(objectProp)" size="mini" icon="plus"></el-button>
+      </div>
     </div>
 
     <div class="el-form-item">
       <label class="el-form-item__label">array-prop</label>
-      <div class="el-form-item__content">{{arrayProp}}</div>
-      <a class="button white" @click="addElement(arrayProp)">Add Element</a>
+      <div class="el-form-item__content">
+        {{arrayProp}}
+        <el-button type="primary" @click="addArrayElement(arrayProp)" size="mini" icon="plus"></el-button>
+      </div>
     </div>
 
     <br />
@@ -65,11 +69,11 @@
       };
     },
     methods: {
-      addProperty(object) {
+      addObjectProperty(object) {
         const keys = Object.keys(object);
         Vue.set(object, `property_${keys.length}`, keys.length);
       },
-      addElement(array) {
+      addArrayElement(array) {
         array.push(array.length + 1);
       }
     }
