@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.4.4
+  * vue-custom-element v2.0.0
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -159,7 +159,7 @@ function convertAttributeValue(value) {
   var propsValue = value;
   var isBoolean = ['true', 'false'].indexOf(value) > -1;
   var valueParsed = parseFloat(propsValue, 10);
-  var isNumber = !isNaN(valueParsed) && isFinite(propsValue);
+  var isNumber = !isNaN(valueParsed) && isFinite(propsValue) && !propsValue.match(/^0+[^.]\d*$/g);
 
   if (isBoolean) {
     propsValue = propsValue === 'true';
