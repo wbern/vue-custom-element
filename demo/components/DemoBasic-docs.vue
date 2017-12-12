@@ -46,7 +46,7 @@ Vue.customElement('demo-basic', DemoElement);
   import Vue from 'vue';
   import DemoElement from 'demo/components/DemoBasic-component';
 
-  export default {
+  export default { /* eslint-disable indent */
     data() {
       return {
         message: 'Hello Vue!',
@@ -115,6 +115,6 @@ Vue.customElement('demo-basic', DemoElement);
         Vue.customElement('demo-basic', DemoElement);
       }
     }
-  };
+  };/* eslint-enable indent */
 </script>
 

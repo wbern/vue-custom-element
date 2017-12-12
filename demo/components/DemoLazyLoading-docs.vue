@@ -55,7 +55,7 @@ Vue.customElement('demo-lazy-loading', () => new Promise((resolve) => {
 <script>
   import Vue from 'vue';
 
-  export default {
+  export default { /* eslint-disable indent */
     data() {
       return {
         showElements: 0,
@@ -101,7 +101,7 @@ Vue.customElement('demo-lazy-loading', () => new Promise((resolve) => {
         this.showElements = this.showElements + 1;
       }
     }
-  };
+  };/* eslint-enable indent */
 </script>
 
 <style>

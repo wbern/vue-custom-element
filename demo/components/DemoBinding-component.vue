@@ -3,14 +3,14 @@
     <div class="el-form-item">
       <label class="el-form-item__label">prop1</label>
       <div class="el-form-item__content">
-        <el-input-number v-model="prop1"></el-input-number>
+        <el-input-number v-model="prop1" size="small"></el-input-number>
       </div>
     </div>
 
     <div class="el-form-item">
       <label class="el-form-item__label">prop2</label>
       <div class="el-form-item__content">
-        <el-input v-model="prop2"></el-input>
+        <el-input v-model="prop2" size="small"></el-input>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
     <div class="el-form-item">
       <label class="el-form-item__label">long-prop-name</label>
       <div class="el-form-item__content">
-        <el-input v-model="longPropName"></el-input>
+        <el-input v-model="longPropName" size="small"></el-input>
       </div>
     </div>
 
@@ -36,7 +36,7 @@
       <label class="el-form-item__label">object-prop</label>
       <div class="el-form-item__content">
         {{objectProp}}
-        <el-button type="primary" @click="addObjectProperty(objectProp)" size="mini" icon="plus"></el-button>
+        &nbsp;&nbsp;<el-button type="primary" @click="addObjectProperty(objectProp)" size="mini" icon="el-icon-plus"></el-button>
       </div>
     </div>
 
@@ -44,7 +44,7 @@
       <label class="el-form-item__label">array-prop</label>
       <div class="el-form-item__content">
         {{arrayProp}}
-        <el-button type="primary" @click="addArrayElement(arrayProp)" size="mini" icon="plus"></el-button>
+        &nbsp;&nbsp;<el-button type="primary" @click="addArrayElement(arrayProp)" size="mini" icon="el-icon-plus"></el-button>
       </div>
     </div>
 

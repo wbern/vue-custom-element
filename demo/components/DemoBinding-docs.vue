@@ -39,7 +39,7 @@
   import Vue from 'vue';
   import DemoElement from 'demo/components/DemoBinding-component';
 
-  export default {
+  export default {/* eslint-disable indent */
     data() {
       return {
         activeNames: ['1'],
@@ -66,7 +66,7 @@ document.getElementsByTagName('demo-basic')[0].objectProp = {foo: 'baz'}
         Vue.customElement('demo-binding', DemoElement);
       }
     }
-  };
+  };/* eslint-enable indent */
 </script>
 
 <style>

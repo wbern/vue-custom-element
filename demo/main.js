@@ -3,7 +3,7 @@ import Promise from 'es6-promise';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-default/index.css';
+import 'element-ui/lib/theme-chalk/index.css';
 import Prism from 'prismjs/prism';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-css';

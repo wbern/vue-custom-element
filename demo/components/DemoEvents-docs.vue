@@ -55,7 +55,7 @@ demoEventElement.addEventListener('change', (event) => { console.info('[Event]',
   import Vue from 'vue';
   import DemoElement from 'demo/components/DemoEvents-component';
 
-  export default {
+  export default { /* eslint-disable indent */
     data() {
       return {
         rating: 3,
@@ -114,7 +114,7 @@ demoEventElement.addEventListener('change', (event) => { console.info('[Event]',
         this.rating = event.detail[0];
       }
     }
-  };
+  };/* eslint-enable indent */
 </script>
 
 <style>

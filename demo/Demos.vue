@@ -12,10 +12,24 @@
   .demos .el-collapse {
     margin: 2em 0;
   }
+  .demos .el-collapse-item__header,
+  .demos .el-collapse-item.is-active .el-collapse-item__header {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px solid #dfe6ec;
+  }
+
+  .demos .el-collapse-item__wrap {
+    background-color: #fbfdff;
+  }
 
   .demos .el-collapse-item__content {
     font-size: 1.2em;
     padding: 10px 36px;
+  }
+
+  .demos .el-button--mini, .el-button--mini.is-round {
+    padding: 5px 10px;
   }
 
   .demos pre[class*="language-"] {
@@ -40,6 +54,11 @@
     width: 100%;
   }
 
+  .demos .el-alert--info {
+    background-color: #50bfff;
+    color: #fff;
+  }
+
   .demo-card {
     border: 1px solid #e0e6ed;
     border-radius: 2px;
@@ -47,6 +66,12 @@
     background-color: #fff;
 
     font-size: 1.4em;
+  }
+
+  @media screen and (max-width: 900px) {
+    .demo-card {
+      padding: 10px 10px;
+    }
   }
 
   .demo-card .demo-button {
@@ -61,6 +86,12 @@
     display: block;
     transition: opacity .2s;
   }
+  @media screen and (max-width: 900px) {
+    .card {
+      padding: 10px 10px;
+    }
+  }
+
   .card h1,
   .card h2,
   .card h3,

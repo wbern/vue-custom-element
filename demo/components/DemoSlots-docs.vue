@@ -55,7 +55,7 @@ Vue.customElement('demo-slots', DemoElement);
   import Vue from 'vue';
   import DemoElement from 'demo/components/DemoSlots-component';
 
-  export default {
+  export default { /* eslint-disable indent */
     data() {
       return {
         activeNames: ['1'],
@@ -91,6 +91,6 @@ Vue.customElement('demo-slots', DemoElement);
         Vue.customElement('demo-slots', DemoElement);
       }
     }
-  };
+  };/* eslint-enable indent */
 </script>
 
