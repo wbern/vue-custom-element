@@ -10,7 +10,7 @@ export function convertAttributeValue(value) {
   let propsValue = value;
   const isBoolean = ['true', 'false'].indexOf(value) > -1;
   const valueParsed = parseFloat(propsValue, 10);
-  const isNumber = !isNaN(valueParsed) && isFinite(propsValue);
+  const isNumber = !isNaN(valueParsed) && isFinite(propsValue) && !propsValue.match(/^0+[^.]\d*$/g);
 
   if (isBoolean) {
     propsValue = propsValue === 'true';
