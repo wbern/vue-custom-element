@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.4.3
+  * vue-custom-element v1.4.4
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -324,16 +324,14 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
     var propsData = getPropsData(element, ComponentDefinition, props);
     var vueVersion = Vue.version && parseInt(Vue.version.split('.')[0], 10) || 0;
 
+    ComponentDefinition.beforeCreate = [].concat(ComponentDefinition.beforeCreate || [], beforeCreate);
+
     if (ComponentDefinition._compiled) {
       var ctorOptions = {};
       if (ComponentDefinition._Ctor) {
         ctorOptions = ComponentDefinition._Ctor[0].options;
       }
-      ComponentDefinition.beforeCreate = ComponentDefinition.beforeCreate || [];
-      ComponentDefinition.beforeCreate.push(beforeCreate);
       ctorOptions.beforeCreate = ComponentDefinition.beforeCreate;
-    } else {
-      ComponentDefinition.beforeCreate = beforeCreate;
     }
 
     var rootElement = void 0;
