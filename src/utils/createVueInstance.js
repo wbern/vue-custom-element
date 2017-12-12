@@ -24,17 +24,14 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
         this.__proto__ && this.__proto__.$emit.call(this, ...args); // eslint-disable-line no-proto
       };
     }
+    ComponentDefinition.beforeCreate = [].concat(ComponentDefinition.beforeCreate || [], beforeCreate);
 
     if (ComponentDefinition._compiled) { // eslint-disable-line no-underscore-dangle
       let ctorOptions = {}; // adjust vue-loader cache object if necessary - https://github.com/vuejs/vue-loader/issues/83
       if (ComponentDefinition._Ctor) { // eslint-disable-line no-underscore-dangle
-        ctorOptions = ComponentDefinition._Ctor[0].options;  // eslint-disable-line no-underscore-dangle
+        ctorOptions = ComponentDefinition._Ctor[0].options; // eslint-disable-line no-underscore-dangle
       }
-      ComponentDefinition.beforeCreate = ComponentDefinition.beforeCreate || [];
-      ComponentDefinition.beforeCreate.push(beforeCreate);
       ctorOptions.beforeCreate = ComponentDefinition.beforeCreate;
-    } else {
-      ComponentDefinition.beforeCreate = beforeCreate;
     }
 
     let rootElement;
