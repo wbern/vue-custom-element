@@ -1,7 +1,6 @@
-![Vue-custom-element](demo/assets/images/vue-custom-element-logo-text.png)
-
 ## [Finally - official Web Components implementation! - check vuejs/vue-web-component-wrapper](https://github.com/vuejs/vue-web-component-wrapper)
 
+![Vue-custom-element](demo/assets/images/vue-custom-element-logo-text.png)
 
 ## Table of content
 
