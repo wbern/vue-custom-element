@@ -157,6 +157,12 @@ Additional, optional, third parameter to `Vue.customElement()` is options object
     console.info('attributeChangedCallback', name, oldValue, value);
   },
   
+  // Root component's definition is passed to this hook just before Vue instance creation - so you can modify it
+  beforeCreateVueInstance(RootComponentDefinition) {
+    console.info('beforeCreateVueInstance', RootComponentDefinition);
+    return RootComponentDefinition;
+  },
+  
   // in case of using vue-custom-element with modals, we destroy  it after defined timeout
   destroyTimeout: 3000,
   

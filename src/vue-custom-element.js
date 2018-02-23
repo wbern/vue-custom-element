@@ -18,6 +18,8 @@ function install(Vue) {
         const asyncComponentPromise = isAsyncComponent && componentDefinition();
         const isAsyncComponentPromise = asyncComponentPromise && asyncComponentPromise.then && typeof asyncComponentPromise.then === 'function';
 
+        typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
+
         if (isAsyncComponent && !isAsyncComponentPromise) {
           throw new Error(`Async component ${tag} do not returns Promise`);
         }

@@ -92,8 +92,8 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
 
     reactiveProps(element, props);
 
-    if (typeof options.beforeCreateInstance === 'function') {
-      options.beforeCreateInstanceCallback(rootElement);
+    if (typeof options.beforeCreateVueInstance === 'function') {
+      rootElement = options.beforeCreateVueInstance(rootElement) || rootElement;
     }
 
     // Define the Vue constructor to manage the element
