@@ -24,8 +24,9 @@ declare namespace VueCustomElement {
 declare module 'vue/types/vue' {
   export interface VueConstructor {
     customElement(tag: string, componentDefinition: ComponentOptions<Vue>, options?: VueCustomElement.options): void;
+    customElement(tag: string, singleFileComponent: VueConstructor<Vue>, options?: VueCustomElement.options): void;
     customElement(tag: string, asyncComponentDefinition: () => Promise<ComponentOptions<Vue>>, options?: VueCustomElement.options): void;
   }
 }
 
-export = VueCustomElement
+export default VueCustomElement

@@ -1,3 +1,5 @@
+## [Finally - official Web Components implementation! - check vuejs/vue-web-component-wrapper](https://github.com/vuejs/vue-web-component-wrapper)
+
 ![Vue-custom-element](demo/assets/images/vue-custom-element-logo-text.png)
 
 ## Table of content
@@ -118,7 +120,7 @@ You can also change `<widget-vue>` HTML attributes and changes will be instantly
 
 | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari-ios.png" alt="iOS Safari" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>iOS | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome-android.png" alt="Chrome for Android" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Android |
 |:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
-| behind --flag | 54+ | 10.1+ | 42+ | 10.3+ | 55+
+| 59+ | 54+ | 10.1+ | 42+ | 10.3+ | 55+
 
 [Custom Elements v1 support](http://caniuse.com/#feat=custom-elementsv1)
 
