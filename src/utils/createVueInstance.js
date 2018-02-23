@@ -92,6 +92,10 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
 
     reactiveProps(element, props);
 
+    if (typeof options.beforeCreateInstance === 'function') {
+      options.beforeCreateInstanceCallback(rootElement);
+    }
+
     // Define the Vue constructor to manage the element
     element.__vue_custom_element__ = new Vue(rootElement);
     if (options.shadow && options.shadowCss && element.shadowRoot) {
