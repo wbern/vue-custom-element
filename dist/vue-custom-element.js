@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v2.0.5
+  * vue-custom-element v2.1.0
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -386,6 +386,10 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
 
     reactiveProps(element, props);
 
+    if (typeof options.beforeCreateVueInstance === 'function') {
+      rootElement = options.beforeCreateVueInstance(rootElement) || rootElement;
+    }
+
     element.__vue_custom_element__ = new Vue(rootElement);
     if (options.shadow && options.shadowCss && element.shadowRoot) {
       var style = document.createElement('style');
@@ -417,6 +421,8 @@ function install(Vue) {
 
         var asyncComponentPromise = isAsyncComponent && componentDefinition();
         var isAsyncComponentPromise = asyncComponentPromise && asyncComponentPromise.then && typeof asyncComponentPromise.then === 'function';
+
+        typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
 
         if (isAsyncComponent && !isAsyncComponentPromise) {
           throw new Error('Async component ' + tag + ' do not returns Promise');
