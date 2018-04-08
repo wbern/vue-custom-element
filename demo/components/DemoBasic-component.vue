@@ -64,7 +64,7 @@
           value: JSON.stringify(this.prop3),
           type: typeof this.prop3
         }, {
-          prop: 'stringProp',
+          prop: 'stringProp (type: String)',
           value: this.stringProp,
           type: typeof this.stringProp
         }, {
