@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v2.1.0
+  * vue-custom-element v3.0.0
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -149,13 +149,15 @@ function toArray(list) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-function convertAttributeValue(value) {
+function convertAttributeValue(value, overrideType) {
   var propsValue = value;
   var isBoolean = ['true', 'false'].indexOf(value) > -1;
   var valueParsed = parseFloat(propsValue, 10);
   var isNumber = !isNaN(valueParsed) && isFinite(propsValue) && !propsValue.match(/^0+[^.]\d*$/g);
 
-  if (isBoolean) {
+  if (overrideType) {
+    propsValue = overrideType(value);
+  } else if (isBoolean) {
     propsValue = propsValue === 'true';
   } else if (isNumber) {
     propsValue = valueParsed;
@@ -174,6 +176,10 @@ function extractProps(collection, props) {
     for (var prop in collection) {
       var camelCaseProp = camelize(prop);
       props.camelCase.indexOf(camelCaseProp) === -1 && props.camelCase.push(camelCaseProp);
+
+      if (collection[camelCaseProp] && collection[camelCaseProp].type) {
+        props.types[prop] = collection[camelCaseProp].type;
+      }
     }
   }
 }
@@ -183,7 +189,8 @@ function getProps() {
 
   var props = {
     camelCase: [],
-    hyphenate: []
+    hyphenate: [],
+    types: {}
   };
 
   if (componentDefinition.mixins) {
@@ -219,7 +226,8 @@ function reactiveProps(element, props) {
           var propName = props.camelCase[index];
           this.__vue_custom_element__[propName] = value;
         } else {
-          this.setAttribute(props.hyphenate[index], convertAttributeValue(value));
+          var type = props.types[props.camelCase[index]];
+          this.setAttribute(props.hyphenate[index], convertAttributeValue(value, type));
         }
       }
     });
@@ -233,7 +241,12 @@ function getPropsData(element, componentDefinition, props) {
     var propCamelCase = props.camelCase[index];
     var propValue = element.attributes[name] || element[propCamelCase];
 
-    propsData[propCamelCase] = propValue instanceof Attr ? convertAttributeValue(propValue.value) : propValue;
+    var type = null;
+    if (props.types[propCamelCase]) {
+      type = props.types[propCamelCase];
+    }
+
+    propsData[propCamelCase] = propValue instanceof Attr ? convertAttributeValue(propValue.value, type) : propValue;
   });
 
   return propsData;
@@ -385,6 +398,7 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
     }
 
     element.__vue_custom_element__ = new Vue(rootElement);
+    element.__vue_custom_element_props__ = props;
     if (options.shadow && options.shadowCss && element.shadowRoot) {
       var style = document.createElement('style');
       style.type = 'text/css';
@@ -443,6 +457,8 @@ function install(Vue) {
         setTimeout(function () {
           if (_this2.__detached__ && _this2.__vue_custom_element__) {
             _this2.__vue_custom_element__.$destroy(true);
+            delete _this2.__vue_custom_element__;
+            delete _this2.__vue_custom_element_props__;
           }
         }, options.destroyTimeout || 3000);
       },
@@ -450,7 +466,8 @@ function install(Vue) {
         if (this.__vue_custom_element__ && typeof value !== 'undefined') {
           var nameCamelCase = camelize(name);
           typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
-          this.__vue_custom_element__[nameCamelCase] = convertAttributeValue(value);
+          var type = this.__vue_custom_element_props__.types[nameCamelCase];
+          this.__vue_custom_element__[nameCamelCase] = convertAttributeValue(value, type);
         }
       },
 
