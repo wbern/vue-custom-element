@@ -35,6 +35,10 @@ function extractProps(collection, props) {
     for (const prop in collection) { // eslint-disable-line no-restricted-syntax, guard-for-in
       const camelCaseProp = camelize(prop);
       props.camelCase.indexOf(camelCaseProp) === -1 && props.camelCase.push(camelCaseProp);
+
+      if (collection[camelCaseProp] && collection[camelCaseProp].type) {
+        props.types[prop] = collection[camelCaseProp].type;
+      }
     }
   }
 }
@@ -47,7 +51,8 @@ function extractProps(collection, props) {
 export function getProps(componentDefinition = {}) {
   const props = {
     camelCase: [],
-    hyphenate: []
+    hyphenate: [],
+    types: {}
   };
 
 
@@ -73,20 +78,6 @@ export function getProps(componentDefinition = {}) {
 }
 
 /**
- * Maps typeof operator back to the associated type
- * @param type
- */
-export function mapToType(type) {
-  switch (type.toLowerCase()) {
-    case 'boolean': return Boolean;
-    case 'number': return Number;
-    case 'string': return String;
-    case 'symbol': return Symbol;
-    default: return null;
-  }
-}
-
-/**
  * If we get DOM node of element we could use it like this:
  * document.querySelector('widget-vue1').prop1 <-- get prop
  * document.querySelector('widget-vue1').prop1 = 'new Value' <-- set prop
@@ -105,7 +96,7 @@ export function reactiveProps(element, props) {
           const propName = props.camelCase[index];
           this.__vue_custom_element__[propName] = value;
         } else {
-          const type = mapToType(typeof props.hyphenate[index]);
+          const type = props.types[props.camelCase[index]];
           this.setAttribute(props.hyphenate[index], convertAttributeValue(value, type));
         }
       }
@@ -127,11 +118,8 @@ export function getPropsData(element, componentDefinition, props) {
     const propValue = element.attributes[name] || element[propCamelCase];
 
     let type = null;
-    if (componentDefinition.props &&
-        componentDefinition.props[propCamelCase] &&
-        componentDefinition.props[propCamelCase].type
-    ) {
-      type = componentDefinition.props[propCamelCase].type;
+    if (props.types[propCamelCase]) {
+      type = props.types[propCamelCase];
     }
 
     propsData[propCamelCase] = propValue instanceof Attr
