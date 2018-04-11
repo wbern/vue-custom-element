@@ -54,7 +54,7 @@ export function getProps(componentDefinition = {}) {
     hyphenate: [],
     types: {}
   };
-
+  const componentDefinitionProps = componentDefinition.$options ? componentDefinition.$options.props : componentDefinition.props; // eslint-disable-line max-len
 
   if (componentDefinition.mixins) {
     componentDefinition.mixins.forEach((mixin) => {
@@ -68,7 +68,7 @@ export function getProps(componentDefinition = {}) {
     extractProps(parentProps, props);
   }
 
-  extractProps(componentDefinition.props, props);
+  extractProps(componentDefinitionProps, props);
 
   props.camelCase.forEach((prop) => {
     props.hyphenate.push(hyphenate(prop));
