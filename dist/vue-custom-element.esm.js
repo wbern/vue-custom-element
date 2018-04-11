@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.0.1
+  * vue-custom-element v3.0.2
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -192,7 +192,6 @@ function getProps() {
     hyphenate: [],
     types: {}
   };
-  var componentDefinitionProps = componentDefinition.$options ? componentDefinition.$options.props : componentDefinition.props;
 
   if (componentDefinition.mixins) {
     componentDefinition.mixins.forEach(function (mixin) {
@@ -207,7 +206,7 @@ function getProps() {
     extractProps(parentProps, props);
   }
 
-  extractProps(componentDefinitionProps, props);
+  extractProps(componentDefinition.props, props);
 
   props.camelCase.forEach(function (prop) {
     props.hyphenate.push(hyphenate(prop));
