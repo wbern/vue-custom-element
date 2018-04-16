@@ -37,7 +37,7 @@ function extractProps(collection, props) {
       props.camelCase.indexOf(camelCaseProp) === -1 && props.camelCase.push(camelCaseProp);
 
       if (collection[camelCaseProp] && collection[camelCaseProp].type) {
-        props.types[prop] = collection[camelCaseProp].type;
+        props.types[prop] = [].concat(collection[camelCaseProp].type)[0];
       }
     }
   }
