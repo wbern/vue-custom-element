@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.0.2
+  * vue-custom-element v3.0.3
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -184,7 +184,7 @@ function extractProps(collection, props) {
       props.camelCase.indexOf(camelCaseProp) === -1 && props.camelCase.push(camelCaseProp);
 
       if (collection[camelCaseProp] && collection[camelCaseProp].type) {
-        props.types[prop] = collection[camelCaseProp].type;
+        props.types[prop] = [].concat(collection[camelCaseProp].type)[0];
       }
     }
   }
