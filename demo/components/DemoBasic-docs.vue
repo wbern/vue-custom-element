@@ -3,7 +3,17 @@
     <h2>Basic demo</h2>
 
     <div class="demo-card">
-      <demo-basic prop1="1" prop2="example text" prop3="true" string-prop="123" long-prop-name="long name"><!-- Some comments --></demo-basic>
+      <demo-basic
+        prop1="1"
+        prop2="example text"
+        prop3="true"
+        string-prop="123"
+        boolean-prop="false"
+        number-prop="123"
+        long-prop-name="long name"
+      >
+        <!-- Some comments -->
+      </demo-basic>
     </div>
 
     <el-collapse v-model="activeNames">
@@ -53,10 +63,13 @@ Vue.customElement('demo-basic', DemoElement);
         activeNames: ['1'],
         HTML: (
 `<demo-basic
-  prop1="1"
-  prop2="example text"
-  prop3="true"
-  long-prop-name="long name">
+    prop1="1"
+    prop2="example text"
+    prop3="true"
+    string-prop="123"
+    boolean-prop="false"
+    number-prop="123"
+    long-prop-name="long name">
 </demo-basic>`
         ),
         vueTemplate: (
@@ -72,12 +85,23 @@ Vue.customElement('demo-basic', DemoElement);
         ),
         vueScript: (
 `export default {
-    props: [
-      'prop1',
-      'prop2',
-      'prop3',
-      'longPropName'
-    ],
+    props: {
+      prop1: {},
+      prop2: {},
+      prop3: {},
+      stringProp: {
+        type: String
+      },
+      booleanProp: {
+        type: Boolean
+      },
+      numberProp: {
+        type: Number
+      },
+      longPropName: {},
+      objectProp: {},
+      arrayProp: {}
+    },
     data() {
       return {
         message: 'Hello Vue-custom-element!'
@@ -85,26 +109,53 @@ Vue.customElement('demo-basic', DemoElement);
     },
     computed: {
       tableData() {
-        return [{
+        const data = [{
           prop: 'prop1',
-          value: this.prop1,
+          value: JSON.stringify(this.prop1),
           type: typeof this.prop1
         }, {
           prop: 'prop2',
-          value: this.prop2,
+          value: JSON.stringify(this.prop2),
           type: typeof this.prop2
         }, {
           prop: 'prop3',
-          value: this.prop3,
+          value: JSON.stringify(this.prop3),
           type: typeof this.prop3
         }, {
+          prop: 'stringProp (type: String)',
+          value: this.stringProp,
+          type: typeof this.stringProp
+        }, {
+          prop: 'booleanProp (type: Boolean)',
+          value: this.booleanProp,
+          type: typeof this.booleanProp
+        }, {
+          prop: 'numberProp (type: Number)',
+          value: this.numberProp,
+          type: typeof this.numberProp
+        }, {
           prop: 'long-prop-name',
-          value: this.longPropName,
+          value: JSON.stringify(this.longPropName),
           type: typeof this.longPropName
         }];
+
+        this.objectProp && data.push({
+          prop: 'objectProp',
+          value: this.objectProp,
+          type: typeof this.objectProp
+        });
+
+        this.arrayProp && data.push({
+          prop: 'arrayProp',
+          value: this.arrayProp,
+          type: typeof this.arrayProp
+        });
+
+        return data;
+      }
     },
     created() {
-      console.info('demo-basic created()');
+      console.log('demo-basic created()');
     }
   };`
         )
