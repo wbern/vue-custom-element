@@ -109,8 +109,8 @@ Vue.customElement('widget-vue', {
 
 ###### JavaScript - element API usage
 ``` js
-document.querySelector('widget-vue')[0].prop2 // get prop value
-document.querySelector('widget-vue')[0].prop2 = 'another string' // set prop value
+document.querySelector('widget-vue').prop2 // get prop value
+document.querySelector('widget-vue').prop2 = 'another string' // set prop value
 ```
 
 You can also change `<widget-vue>` HTML attributes and changes will be instantly reflected.
