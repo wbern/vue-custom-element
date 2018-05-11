@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.0.4
+  * vue-custom-element v3.0.5
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -159,7 +159,7 @@ function convertAttributeValue(value, overrideType) {
   var propsValue = value;
   var isBoolean = ['true', 'false'].indexOf(value) > -1;
   var valueParsed = parseFloat(propsValue, 10);
-  var isNumber = !isNaN(valueParsed) && isFinite(propsValue) && !propsValue.match(/^0+[^.]\d*$/g);
+  var isNumber = !isNaN(valueParsed) && isFinite(propsValue) && typeof propsValue === 'string' && !propsValue.match(/^0+[^.]\d*$/g);
 
   if (overrideType && overrideType !== Boolean) {
     propsValue = overrideType(value);
