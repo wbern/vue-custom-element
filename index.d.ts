@@ -10,23 +10,23 @@ declare class VueCustomElement {
 
 declare namespace VueCustomElement {
     interface options {
-        constructorCallback: () => void;
-        connectedCallback: () => void;
-        disconnectedCallback: () => void;
-        attributeChangedCallback: (name: string, oldValue: any, value: any) => void;
-        destroyTimeout: number;
-        props: ComponentOptions<Vue>['props'];
-        shadow: boolean;
-        shadowCss: string;
+        constructorCallback?: () => void;
+        connectedCallback?: () => void;
+        disconnectedCallback?: () => void;
+        attributeChangedCallback?: (name: string, oldValue: any, value: any) => void;
+        destroyTimeout?: number;
+        props?: ComponentOptions<Vue>['props'];
+        shadow?: boolean;
+        shadowCss?: string;
     }
 }
 
 declare module 'vue/types/vue' {
-  export interface VueConstructor {
-    customElement(tag: string, componentDefinition: ComponentOptions<Vue>, options?: VueCustomElement.options): void;
-    customElement(tag: string, singleFileComponent: VueConstructor<Vue>, options?: VueCustomElement.options): void;
-    customElement(tag: string, asyncComponentDefinition: () => Promise<ComponentOptions<Vue>>, options?: VueCustomElement.options): void;
-  }
+    export interface VueConstructor {
+        customElement(tag: string, componentDefinition: ComponentOptions<Vue>, options?: VueCustomElement.options): void;
+        customElement(tag: string, singleFileComponent: VueConstructor<Vue>, options?: VueCustomElement.options): void;
+        customElement(tag: string, asyncComponentDefinition: () => Promise<ComponentOptions<Vue>>, options?: VueCustomElement.options): void;
+    }
 }
 
 export default VueCustomElement
