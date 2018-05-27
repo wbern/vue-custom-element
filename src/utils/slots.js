@@ -22,8 +22,8 @@ export function getAttributes(children) {
  * @returns {NodeList}
  */
 export function getChildNodes(element) {
-  if (element.childNodes.length > 0) return element.childNodes;
-  if (element.content && element.content.childNodes && element.content.childNodes.length > 0) {
+  if (element.childNodes.length) return element.childNodes;
+  if (element.content && element.content.childNodes && element.content.childNodes.length) {
     return element.content.childNodes;
   }
 
@@ -36,12 +36,12 @@ export function getChildNodes(element) {
 
 /**
  * Get Vue element representing a template for use with slots
- * @param {Function} createVueElement - createElement function from vm
+ * @param {Function} createElement - createElement function from vm
  * @param {HTMLElement} element - template element
  * @param {Object} elementOptions
  * @returns {VNode}
  */
-export function templateElement(createVueElement, element, elementOptions) {
+export function templateElement(createElement, element, elementOptions) {
   const templateChildren = getChildNodes(element);
 
   const vueTemplateChildren = toArray(templateChildren).map((child) => {
@@ -49,7 +49,7 @@ export function templateElement(createVueElement, element, elementOptions) {
     // https://vuejs.org/v2/guide/render-function#createElement-Arguments
     if (child.nodeName === '#text') return child.nodeValue;
 
-    return createVueElement(child.tagName, {
+    return createElement(child.tagName, {
       attrs: getAttributes(child),
       domProps: {
         innerHTML: child.innerHTML
@@ -59,7 +59,7 @@ export function templateElement(createVueElement, element, elementOptions) {
 
   elementOptions.slot = element.id;
 
-  return createVueElement('template', elementOptions, vueTemplateChildren);
+  return createElement('template', elementOptions, vueTemplateChildren);
 }
 
 /**

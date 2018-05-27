@@ -4,13 +4,11 @@
 
     <div class="demo-card">
       <demo-slots>
-        <template slot id="header">
-          <h3>Template Header Slot</h3>
-
-          With an h3 header and a basic text node
-        </template>
+        <span vue-slot="header">Heder slot passed from outside</span>
         <span>Default slot</span>
-        <span vue-slot="footer">Footer slot passed from outside</span>
+        <template slot id="footer">
+          <h4>Template Footer Slot</h4>
+        </template>
       </demo-slots>
     </div>
 
@@ -31,7 +29,7 @@
 
         <p>
           To use template tags to add content without necessitating the need for an element wrapper,
-          you can follow the following pattern:
+          you can follow the pattern:
         </p>
 
         <p>
@@ -47,45 +45,8 @@
         <h4>Passing Custom Elements Inside Slots</h4>
 
         <p>
-          When passing custom elements inside of slots, you may get errors that warn about
-          <code>Unknown custom element</code>. There are two ways around this.
-
-
-          <ol>
-            <li>
-              <p>Add your custom element to a list of ignored elements in the vue config:<p>
-              <p>
-                <code>Vue.config.ignoredElements.push('my-custom-element')</code>
-              </p>
-            </li>
-
-            <li>
-              <p>
-                Make sure the elments being inserted into another element are created as custom
-                elements first:
-              </p>
-
-              <p>
-                <pre><code class="language-javascript">
-Vue.customElement('custom-child-one', CustomChildOne)
-Vue.customElement('custom-child-two', CustomChildTwo)
-
-Vue.customElement('custom-parent', CustomParent)
-                </code></pre>
-
-                <br />
-
-                <pre><code class="language-html">
-&lt;custom-parent&gt;
-  &lt;template slot id="some-id"&gt;
-    &lt;custom-child-one&gt;&lt;/custom-child-one&gt;
-    &lt;custom-child-two&gt;&lt;/custom-child-one&gt;
-  &lt;/template&gt;
-&lt;/custom-parent&gt;
-                </code></pre>
-              </p>
-            </li>
-          </ol>
+          When passing custom elements inside the slots, you may get warnings about
+          <code>Unknown custom element</code>. To avoid it, use method described in docs - <a href="https://github.com/karol-f/vue-custom-element#caveats">https://github.com/karol-f/vue-custom-element#caveats</a>.
         </p>
       </el-collapse-item>
       <el-collapse-item title="Custom Element HTML" name="2">
@@ -125,13 +86,11 @@ Vue.customElement('demo-slots', DemoElement);
         activeNames: ['1'],
         HTML: (
 `<demo-slots>
-  <template slot id="header">
-    <h3>Template Header Slot</h3>
-
-    With an h3 header and a basic text node
-  </template>
+  <span vue-slot="header">Heder slot passed from outside</span>
   <span>Default slot</span>
-  <span vue-slot="footer">Footer slot passed from outside</span>
+  <template slot id="footer">
+    <h4>Template Footer Slot</h4>
+  </template>
 </demo-slots>`
         ),
         vueTemplate: (
@@ -162,3 +121,8 @@ Vue.customElement('demo-slots', DemoElement);
   };/* eslint-enable indent */
 </script>
 
+<style scoped>
+  h4 {
+    margin-bottom: 0;
+  }
+</style>
