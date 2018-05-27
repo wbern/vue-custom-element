@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.0.6
+  * vue-custom-element v3.1.0
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -262,6 +262,38 @@ function getAttributes(children) {
   return attributes;
 }
 
+function getChildNodes(element) {
+  if (element.childNodes.length) return element.childNodes;
+  if (element.content && element.content.childNodes && element.content.childNodes.length) {
+    return element.content.childNodes;
+  }
+
+  var placeholder = document.createElement('div');
+
+  placeholder.innerHTML = element.innerHTML;
+
+  return placeholder.childNodes;
+}
+
+function templateElement(createElement, element, elementOptions) {
+  var templateChildren = getChildNodes(element);
+
+  var vueTemplateChildren = toArray(templateChildren).map(function (child) {
+    if (child.nodeName === '#text') return child.nodeValue;
+
+    return createElement(child.tagName, {
+      attrs: getAttributes(child),
+      domProps: {
+        innerHTML: child.innerHTML
+      }
+    });
+  });
+
+  elementOptions.slot = element.id;
+
+  return createElement('template', elementOptions, vueTemplateChildren);
+}
+
 function getSlots() {
   var children = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var createElement = arguments[1];
@@ -277,7 +309,7 @@ function getSlots() {
       var elementOptions = {
         attrs: attributes,
         domProps: {
-          innerHTML: child.innerHTML
+          innerHTML: child.innerHTML === '' ? child.innerText : child.innerHTML
         }
       };
 
@@ -286,7 +318,9 @@ function getSlots() {
         attributes.slot = undefined;
       }
 
-      slots.push(createElement(child.tagName, elementOptions));
+      var slotVueElement = child.tagName === 'TEMPLATE' ? templateElement(createElement, child, elementOptions) : createElement(child.tagName, elementOptions);
+
+      slots.push(slotVueElement);
     }
   });
 
