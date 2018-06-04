@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.1.0
+  * vue-custom-element v3.2.0
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -439,6 +439,10 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
 
     element.__vue_custom_element__ = new Vue(rootElement);
     element.__vue_custom_element_props__ = props;
+    element.getVueInstance = function () {
+      return element.__vue_custom_element__.$children[0];
+    };
+
     if (options.shadow && options.shadowCss && element.shadowRoot) {
       var style = document.createElement('style');
       style.type = 'text/css';
