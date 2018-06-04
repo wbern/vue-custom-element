@@ -205,10 +205,10 @@ Custom Element HTML tag will expose API to interact with underlying Vue componen
 
 ## Testing
 
-For advanced access, when exposed API is not enough, defined custom element will expose Vue instance via `__vue_custom_element__` prop.
+For advanced access, when exposed API is not enough, defined custom element will expose Vue instance via `getVueInstance()` method.
 
 ```javascript
-console.info(document.querySelector('widget-vue').__vue_custom_element__)
+console.info(document.querySelector('widget-vue').getVueInstance())
 ```
 ## Caveats
 
