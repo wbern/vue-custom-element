@@ -29,7 +29,9 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     if (ComponentDefinition._compiled) { // eslint-disable-line no-underscore-dangle
       let ctorOptions = {}; // adjust vue-loader cache object if necessary - https://github.com/vuejs/vue-loader/issues/83
       if (ComponentDefinition._Ctor) { // eslint-disable-line no-underscore-dangle
-        ctorOptions = ComponentDefinition._Ctor[0].options; // eslint-disable-line no-underscore-dangle
+        ctorOptions = ComponentDefinition._Ctor[0] ? // eslint-disable-line no-underscore-dangle
+          ComponentDefinition._Ctor[0].options : // eslint-disable-line no-underscore-dangle
+          ComponentDefinition._Ctor[2].options; // eslint-disable-line no-underscore-dangle
       }
       ctorOptions.beforeCreate = ComponentDefinition.beforeCreate;
     }
