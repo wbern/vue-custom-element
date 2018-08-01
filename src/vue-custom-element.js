@@ -28,9 +28,11 @@ function install(Vue) {
             asyncComponentPromise.then((lazyLoadedComponent) => {
               const lazyLoadedComponentProps = getProps(lazyLoadedComponent);
               createVueInstance(this, Vue, lazyLoadedComponent, lazyLoadedComponentProps, options);
+              typeof options.vueInstanceCreatedCallback === 'function' && options.vueInstanceCreatedCallback.call(this);
             });
           } else {
             createVueInstance(this, Vue, componentDefinition, props, options);
+            typeof options.vueInstanceCreatedCallback === 'function' && options.vueInstanceCreatedCallback.call(this);
           }
         }
 

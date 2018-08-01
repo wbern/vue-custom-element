@@ -163,6 +163,11 @@ Additional, optional, third parameter to `Vue.customElement()` is options object
     return RootComponentDefinition;
   },
   
+  // Vue instance is created
+  vueInstanceCreatedCallback() {
+    console.info('vueInstanceCreatedCallback');
+  },
+  
   // in case of using vue-custom-element with modals, we destroy  it after defined timeout
   destroyTimeout: 3000,
   
