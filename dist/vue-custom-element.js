@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.2.2
+  * vue-custom-element v3.2.3
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -484,9 +484,11 @@ function install(Vue) {
             asyncComponentPromise.then(function (lazyLoadedComponent) {
               var lazyLoadedComponentProps = getProps(lazyLoadedComponent);
               createVueInstance(_this, Vue, lazyLoadedComponent, lazyLoadedComponentProps, options);
+              typeof options.vueInstanceCreatedCallback === 'function' && options.vueInstanceCreatedCallback.call(_this);
             });
           } else {
             createVueInstance(this, Vue, componentDefinition, props, options);
+            typeof options.vueInstanceCreatedCallback === 'function' && options.vueInstanceCreatedCallback.call(this);
           }
         }
 
