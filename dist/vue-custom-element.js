@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.2.3
+  * vue-custom-element v3.2.4
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -71,6 +71,11 @@ function registerCustomElement(tag) {
     typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
   }
 
+  function define(tagName, CustomElement) {
+    var existingCustomElement = customElements.get(tagName);
+    return typeof existingCustomElement !== 'undefined' ? existingCustomElement : customElements.define(tagName, CustomElement);
+  }
+
   if (isES2015$1) {
     var CustomElement = function (_CustomElement2) {
       _inherits(CustomElement, _CustomElement2);
@@ -102,7 +107,7 @@ function registerCustomElement(tag) {
     CustomElement.prototype.disconnectedCallback = disconnectedCallback;
     CustomElement.prototype.attributeChangedCallback = attributeChangedCallback;
 
-    customElements.define(tag, CustomElement);
+    define(tag, CustomElement);
     return CustomElement;
   } else {
     var _CustomElement3 = function _CustomElement3(self) {
@@ -126,7 +131,7 @@ function registerCustomElement(tag) {
     _CustomElement3.prototype.disconnectedCallback = disconnectedCallback;
     _CustomElement3.prototype.attributeChangedCallback = attributeChangedCallback;
 
-    customElements.define(tag, _CustomElement3);
+    define(tag, _CustomElement3);
     return _CustomElement3;
   }
 }
