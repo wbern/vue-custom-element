@@ -14,7 +14,7 @@ export function convertAttributeValue(value, overrideType) {
   const valueParsed = parseFloat(propsValue, 10);
   const isNumber = !isNaN(valueParsed) && isFinite(propsValue) && (typeof propsValue === 'string' && !propsValue.match(/^0+[^.]\d*$/g));
 
-  if (overrideType && overrideType !== Boolean) {
+  if (overrideType && overrideType !== Boolean && typeof propsValue !== overrideType) { // eslint-disable-line valid-typeof
     propsValue = overrideType(value);
   } else if (isBoolean || overrideType === Boolean) {
     propsValue = propsValue === '' ? true : propsValue === 'true';
@@ -122,9 +122,12 @@ export function getPropsData(element, componentDefinition, props) {
       type = props.types[propCamelCase];
     }
 
-    propsData[propCamelCase] = propValue instanceof Attr
-      ? convertAttributeValue(propValue.value, type)
-      : propValue;
+    // ensure propsData is only set if `propsValue` exists.
+    if (propValue instanceof Attr) {
+      propsData[propCamelCase] = convertAttributeValue(propValue.value, type);
+    } else if (typeof propValue !== 'undefined') {
+      propsData[propCamelCase] = propValue;
+    }
   });
 
   return propsData;

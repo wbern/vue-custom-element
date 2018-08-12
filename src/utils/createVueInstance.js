@@ -46,7 +46,7 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
           reactiveProps() {
             const reactivePropsList = {};
             props.camelCase.forEach((prop) => {
-              reactivePropsList[prop] = this[prop];
+              typeof this[prop] !== 'undefined' && (reactivePropsList[prop] = this[prop]);
             });
 
             return reactivePropsList;

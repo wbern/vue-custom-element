@@ -34,7 +34,9 @@
 <script>
   export default {
     props: {
-      prop1: {},
+      prop1: {
+        required: true
+      },
       prop2: {},
       prop3: {},
       stringProp: {
