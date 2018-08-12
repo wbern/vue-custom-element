@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.2.4
+  * vue-custom-element v3.2.5
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -160,7 +160,7 @@ function convertAttributeValue(value, overrideType) {
   var valueParsed = parseFloat(propsValue, 10);
   var isNumber = !isNaN(valueParsed) && isFinite(propsValue) && typeof propsValue === 'string' && !propsValue.match(/^0+[^.]\d*$/g);
 
-  if (overrideType && overrideType !== Boolean) {
+  if (overrideType && overrideType !== Boolean && (typeof propsValue === 'undefined' ? 'undefined' : _typeof(propsValue)) !== overrideType) {
     propsValue = overrideType(value);
   } else if (isBoolean || overrideType === Boolean) {
     propsValue = propsValue === '' ? true : propsValue === 'true';
@@ -251,7 +251,11 @@ function getPropsData(element, componentDefinition, props) {
       type = props.types[propCamelCase];
     }
 
-    propsData[propCamelCase] = propValue instanceof Attr ? convertAttributeValue(propValue.value, type) : propValue;
+    if (propValue instanceof Attr) {
+      propsData[propCamelCase] = convertAttributeValue(propValue.value, type);
+    } else if (typeof propValue !== 'undefined') {
+      propsData[propCamelCase] = propValue;
+    }
   });
 
   return propsData;
@@ -395,7 +399,7 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
 
             var reactivePropsList = {};
             props.camelCase.forEach(function (prop) {
-              reactivePropsList[prop] = _this[prop];
+              typeof _this[prop] !== 'undefined' && (reactivePropsList[prop] = _this[prop]);
             });
 
             return reactivePropsList;
