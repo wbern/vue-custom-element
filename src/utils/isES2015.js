@@ -1,5 +1,5 @@
 function isES2015() {
-  if (typeof Symbol === 'undefined' || typeof Reflect === 'undefined') return false;
+  if (typeof Symbol === 'undefined' || typeof Reflect === 'undefined' || typeof Proxy === 'undefined' || Object.isSealed(Proxy)) return false;
 
   return true;
 }
