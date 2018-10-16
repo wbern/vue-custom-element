@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.2.5
+  * vue-custom-element v3.2.6
   * (c) 2018 Karol Fabjańczuk
   * @license MIT
   */
@@ -18,7 +18,7 @@ function setPrototypeOf(obj, proto) {
 var setPrototypeOf_1 = setPrototypeOf.bind(Object);
 
 function isES2015() {
-  if (typeof Symbol === 'undefined' || typeof Reflect === 'undefined') return false;
+  if (typeof Symbol === 'undefined' || typeof Reflect === 'undefined' || typeof Proxy === 'undefined' || Object.isSealed(Proxy)) return false;
 
   return true;
 }
