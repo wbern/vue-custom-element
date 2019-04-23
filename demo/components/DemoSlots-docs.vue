@@ -125,4 +125,8 @@ Vue.customElement('demo-slots', DemoElement);
   h4 {
     margin-bottom: 0;
   }
+  .demo-card /deep/ .el-alert .el-alert__description {
+    font-size: 1em;
+    color: #fff;
+  }
 </style>
