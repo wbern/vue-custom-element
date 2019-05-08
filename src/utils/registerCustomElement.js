@@ -4,6 +4,11 @@ import isES2015 from './isES2015';
 export default function registerCustomElement(tag, options = {}) {
   if (typeof customElements === 'undefined') { return; } // eslint-disable-line
 
+  // eslint-disable-next-line eqeqeq
+  if (options.destroyOnDetach == undefined) {
+    options.destroyOnDetach = true;
+  }
+
   function constructorCallback() {
     if (options.shadow === true && HTMLElement.prototype.attachShadow) {
       this.attachShadow({ mode: 'open' });
