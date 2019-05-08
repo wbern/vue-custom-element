@@ -168,7 +168,7 @@ Additional, optional, third parameter to `Vue.customElement()` is options object
     console.info('vueInstanceCreatedCallback');
   },
   
-  // in case of using vue-custom-element with modals, we destroy  it after defined timeout
+  // in case of using vue-custom-element with modals, we destroy  it after defined timeout. Use "null" value if you want to manually "$destroy" it.
   destroyTimeout: 3000,
   
   // only needed when using lazy-loading - 'props' are not accessible on Custom Element registration so we have to provide them
