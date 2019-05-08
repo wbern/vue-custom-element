@@ -48,13 +48,15 @@ function install(Vue) {
         this.__detached__ = true;
         typeof options.disconnectedCallback === 'function' && options.disconnectedCallback.call(this);
 
-        setTimeout(() => {
-          if (this.__detached__ && this.__vue_custom_element__) {
-            this.__vue_custom_element__.$destroy(true);
-            delete this.__vue_custom_element__;
-            delete this.__vue_custom_element_props__;
-          }
-        }, options.destroyTimeout || 3000);
+        if (options.destroyOnDetach) {
+          setTimeout(() => {
+            if (this.__detached__ && this.__vue_custom_element__) {
+              this.__vue_custom_element__.$destroy(true);
+              delete this.__vue_custom_element__;
+              delete this.__vue_custom_element_props__;
+            }
+          }, options.destroyTimeout || 3000);
+        }
       },
 
       /**

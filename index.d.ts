@@ -15,6 +15,7 @@ declare namespace VueCustomElement {
         disconnectedCallback?: () => void;
         attributeChangedCallback?: (name: string, oldValue: any, value: any) => void;
         destroyTimeout?: number;
+        destroyOnDetach?: boolean;
         props?: ComponentOptions<Vue>['props'];
         shadow?: boolean;
         shadowCss?: string;
