@@ -10,7 +10,7 @@ import { camelize, hyphenate } from './helpers';
  */
 export function convertAttributeValue(value, overrideType) {
   if (value === null || value === undefined) {
-    return value
+    return overrideType === Boolean ? false : undefined;
   }
   let propsValue = value;
   const isBoolean = ['true', 'false'].indexOf(value) > -1;
