@@ -156,7 +156,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 function convertAttributeValue(value, overrideType) {
   if (value === null || value === undefined) {
-    return value;
+    return overrideType === Boolean ? false : undefined;
   }
   var propsValue = value;
   var isBoolean = ['true', 'false'].indexOf(value) > -1;
