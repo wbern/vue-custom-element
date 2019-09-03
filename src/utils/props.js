@@ -9,6 +9,9 @@ import { camelize, hyphenate } from './helpers';
  * @returns {*}
  */
 export function convertAttributeValue(value, overrideType) {
+  if (value === null || value === undefined) {
+    return overrideType === Boolean ? false : undefined;
+  }
   let propsValue = value;
   const isBoolean = ['true', 'false'].indexOf(value) > -1;
   const valueParsed = parseFloat(propsValue, 10);
