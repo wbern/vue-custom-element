@@ -50,6 +50,7 @@ function install(Vue) {
 
         options.destroyTimeout !== null && setTimeout(() => {
           if (this.__detached__ && this.__vue_custom_element__) {
+            this.__detached__ = false;
             this.__vue_custom_element__.$destroy(true);
             delete this.__vue_custom_element__;
             delete this.__vue_custom_element_props__;
