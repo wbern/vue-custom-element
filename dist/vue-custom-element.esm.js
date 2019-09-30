@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.2.8
+  * vue-custom-element v3.2.9
   * (c) 2019 Karol Fabjańczuk
   * @license MIT
   */
@@ -508,6 +508,7 @@ function install(Vue) {
 
         options.destroyTimeout !== null && setTimeout(function () {
           if (_this2.__detached__ && _this2.__vue_custom_element__) {
+            _this2.__detached__ = false;
             _this2.__vue_custom_element__.$destroy(true);
             delete _this2.__vue_custom_element__;
             delete _this2.__vue_custom_element_props__;
