@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v3.2.10
+  * vue-custom-element v3.2.11
   * (c) 2019 Karol Fabjańczuk
   * @license MIT
   */
@@ -388,11 +388,14 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
     ComponentDefinition.beforeCreate = [].concat(ComponentDefinition.beforeCreate || [], beforeCreate);
 
     if (ComponentDefinition._compiled) {
-      var ctorOptions = {};
-      if (ComponentDefinition._Ctor) {
-        ctorOptions = Object.values(ComponentDefinition._Ctor)[0].options;
+      var constructorOptions = {};
+      var _constructor = ComponentDefinition._Ctor;
+      if (_constructor) {
+        constructorOptions = Object.keys(_constructor).map(function (key) {
+          return _constructor[key];
+        })[0].options;
       }
-      ctorOptions.beforeCreate = ComponentDefinition.beforeCreate;
+      constructorOptions.beforeCreate = ComponentDefinition.beforeCreate;
     }
 
     var rootElement = void 0;
