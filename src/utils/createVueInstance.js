@@ -27,11 +27,12 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     ComponentDefinition.beforeCreate = [].concat(ComponentDefinition.beforeCreate || [], beforeCreate);
 
     if (ComponentDefinition._compiled) { // eslint-disable-line no-underscore-dangle
-      let ctorOptions = {}; // adjust vue-loader cache object if necessary - https://github.com/vuejs/vue-loader/issues/83
-      if (ComponentDefinition._Ctor) { // eslint-disable-line no-underscore-dangle
-        ctorOptions = Object.values(ComponentDefinition._Ctor)[0].options; // eslint-disable-line no-underscore-dangle
+      let constructorOptions = {}; // adjust vue-loader cache object if necessary - https://github.com/vuejs/vue-loader/issues/83
+      const constructor = ComponentDefinition._Ctor; // eslint-disable-line no-underscore-dangle
+      if (constructor) { // eslint-disable-line no-underscore-dangle
+        constructorOptions = Object.keys(constructor).map(key => constructor[key])[0].options; // eslint-disable-line no-underscore-dangle
       }
-      ctorOptions.beforeCreate = ComponentDefinition.beforeCreate;
+      constructorOptions.beforeCreate = ComponentDefinition.beforeCreate;
     }
 
     let rootElement;
