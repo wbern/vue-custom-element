@@ -219,6 +219,7 @@ console.info(document.querySelector('widget-vue').getVueInstance())
 
 * custom elements **must** contain a hyphen in its tag name. For example, `my-element` is valid, but `myelement` is not
 * in dev mode Vue will display console warning about element not being registered. It's desirable behaviour as we want to use browser's Custom Elements registration. You can use https://vuejs.org/v2/api/#ignoredElements to get rid of this warnings.
+* Vue Devtools will not work properly with nested custom elements. This is because each custom element is treated as a separate Vue mount point. There is a way to "patch" this by linking together all the mount points by manipulating the $children property of each root VueComponent. For a script on how to do this, refer to issue https://github.com/karol-f/vue-custom-element/issues/150#issuecomment-585079077
 
 ## Contribute
 
